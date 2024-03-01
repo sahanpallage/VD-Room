@@ -1,11 +1,14 @@
+"use client";
 import Image from "next/image";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { ImStarHalf } from "react-icons/im";
 import { PiVirtualRealityFill } from "react-icons/pi";
 import { TiShoppingCart } from "react-icons/ti";
 
 interface propsType {
+  id: number;
   img: string;
   title: string;
   desc: string;
@@ -14,12 +17,23 @@ interface propsType {
 }
 
 const ProductCard: React.FC<propsType> = ({
+  id,
   img,
   title,
   desc,
   rating,
   price,
 }) => {
+  const router = useRouter();
+
+  const [isHovered, setIsHovered] = useState(false);
+
+  const cardStyle = {
+    cursor: "pointer",
+    transform: isHovered ? "scale(1.05)" : "scale(1)",
+    transition: "transform 0.3s",
+  };
+
   const generateRating = (rating: number) => {
     const stars = [];
     for (let i = 0; i < 5; i++) {
@@ -34,7 +48,13 @@ const ProductCard: React.FC<propsType> = ({
     return <div className="flex gap-1">{stars}</div>;
   };
   return (
-    <div className="pt-3 px-3 border border-gray-200 rounded-xl max-w-[400px]">
+    <div
+      onClick={() => router.push(`/product/${id}`)}
+      className="pt-3 px-3 border border-gray-200 rounded-xl max-w-[400px]"
+      style={cardStyle}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <div>
         <Image
           className="w-full h-fit rounded-xl"
