@@ -1,9 +1,8 @@
 "use client";
+import { generateRating } from "@/utils/common";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { AiFillStar, AiOutlineStar } from "react-icons/ai";
-import { ImStarHalf } from "react-icons/im";
 import { PiVirtualRealityFill } from "react-icons/pi";
 import { TiShoppingCart } from "react-icons/ti";
 
@@ -34,19 +33,6 @@ const ProductCard: React.FC<propsType> = ({
     transition: "transform 0.3s",
   };
 
-  const generateRating = (rating: number) => {
-    const stars = [];
-    for (let i = 0; i < 5; i++) {
-      if (rating >= i + 1) {
-        stars.push(<AiFillStar key={i} className="text-accent" />);
-      } else if (rating >= i + 0.5) {
-        stars.push(<ImStarHalf key={i} className="text-accent" />);
-      } else {
-        stars.push(<AiOutlineStar key={i} className="text-accent" />);
-      }
-    }
-    return <div className="flex gap-1">{stars}</div>;
-  };
   return (
     <div
       onClick={() => router.push(`/product/${id}`)}
